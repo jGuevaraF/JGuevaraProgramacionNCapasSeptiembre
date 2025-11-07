@@ -73,13 +73,22 @@ namespace DL_EF
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MateriaChangeStatus", idParameter, statusParameter);
         }
     
-        public virtual ObjectResult<MateriaGetAll_Result> MateriaGetAll(string nombre)
+        public virtual ObjectResult<CarreraGetAll_Result> CarreraGetAll()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CarreraGetAll_Result>("CarreraGetAll");
+        }
+    
+        public virtual ObjectResult<MateriaGetAll_Result> MateriaGetAll(string nombre, Nullable<int> idCarrera)
         {
             var nombreParameter = nombre != null ?
                 new ObjectParameter("Nombre", nombre) :
                 new ObjectParameter("Nombre", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MateriaGetAll_Result>("MateriaGetAll", nombreParameter);
+            var idCarreraParameter = idCarrera.HasValue ?
+                new ObjectParameter("IdCarrera", idCarrera) :
+                new ObjectParameter("IdCarrera", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MateriaGetAll_Result>("MateriaGetAll", nombreParameter, idCarreraParameter);
         }
     }
 }

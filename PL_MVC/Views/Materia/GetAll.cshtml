@@ -10,6 +10,18 @@
 <h1>Materias</h1> <i class="bi bi-wifi-off"></i>
 <hr />
 
+
+@using (Html.BeginForm("GetAll", "Materia", FormMethod.Post))
+{
+
+    @Html.TextBoxFor(model => model.Nombre) 
+    @Html.DropDownListFor(model=> model.Carrera.IdCarrera, new SelectList(Model.Carrera.Carreras, "IdCarrera", "Nombre"))
+
+    <button type="submit">Buscar</button>
+
+}
+
+
 <div class="container">
     <div class="row">
         <a href="@Url.Action("Form","Materia")" class="col-3 btn btn-success">Agregar Materia</a>

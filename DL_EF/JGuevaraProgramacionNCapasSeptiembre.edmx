@@ -28,7 +28,7 @@ warning 6002: The table/view 'JGuevaraProgramacionNCapasSeptiembre2025.dbo.Mater
           <Property Name="IdCarrera" Type="int" />
           <Property Name="Estatus" Type="bit" />
         </EntityType>
-        <Association Name="FK__Materia__IdCarre__267ABA7A">
+        <Association Name="FK__Materia__IdCarre__2B3F6F97">
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="0..1" />
           <End Role="Materia" Type="Self.Materia" Multiplicity="*" />
           <ReferentialConstraint>
@@ -40,6 +40,7 @@ warning 6002: The table/view 'JGuevaraProgramacionNCapasSeptiembre2025.dbo.Mater
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CarreraGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="MateriaAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
           <Parameter Name="Creditos" Type="tinyint" Mode="In" />
@@ -52,6 +53,7 @@ warning 6002: The table/view 'JGuevaraProgramacionNCapasSeptiembre2025.dbo.Mater
         </Function>
         <Function Name="MateriaGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="IdCarrera" Type="int" Mode="In" />
         </Function>
         <Function Name="MateriaGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdMateria" Type="int" Mode="In" />
@@ -71,7 +73,7 @@ warning 6002: The table/view 'JGuevaraProgramacionNCapasSeptiembre2025.dbo.Mater
     [Materia].[Estatus] AS [Estatus]
     FROM [dbo].[Materia] AS [Materia]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__Materia__IdCarre__267ABA7A" Association="Self.FK__Materia__IdCarre__267ABA7A">
+          <AssociationSet Name="FK__Materia__IdCarre__2B3F6F97" Association="Self.FK__Materia__IdCarre__2B3F6F97">
             <End Role="Carrera" EntitySet="Carrera" />
             <End Role="Materia" EntitySet="Materia" />
           </AssociationSet>
@@ -135,8 +137,10 @@ warning 6002: The table/view 'JGuevaraProgramacionNCapasSeptiembre2025.dbo.Mater
             <Parameter Name="Id" Mode="In" Type="Int32" />
             <Parameter Name="Status" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <FunctionImport Name="CarreraGetAll" ReturnType="Collection(JGuevaraProgramacionNCapasSeptiembre2025Model.CarreraGetAll_Result)" />
           <FunctionImport Name="MateriaGetAll" ReturnType="Collection(JGuevaraProgramacionNCapasSeptiembre2025Model.MateriaGetAll_Result)">
             <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="IdCarrera" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MateriaGetById_Result">
@@ -145,6 +149,10 @@ warning 6002: The table/view 'JGuevaraProgramacionNCapasSeptiembre2025.dbo.Mater
           <Property Type="Byte" Name="Creditos" Nullable="true" />
           <Property Type="Decimal" Name="Promedio" Nullable="true" Precision="4" Scale="0" />
           <Property Type="Decimal" Name="Dinero" Nullable="true" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="CarreraGetAll_Result">
+          <Property Type="Int32" Name="IdCarrera" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="MateriaGetAll_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -199,6 +207,14 @@ warning 6002: The table/view 'JGuevaraProgramacionNCapasSeptiembre2025.dbo.Mater
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="MateriaChangeStatus" FunctionName="JGuevaraProgramacionNCapasSeptiembre2025Model.Store.MateriaChangeStatus" />
+          <FunctionImportMapping FunctionImportName="CarreraGetAll" FunctionName="JGuevaraProgramacionNCapasSeptiembre2025Model.Store.CarreraGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JGuevaraProgramacionNCapasSeptiembre2025Model.CarreraGetAll_Result">
+                <ScalarProperty Name="IdCarrera" ColumnName="IdCarrera" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="MateriaGetAll" FunctionName="JGuevaraProgramacionNCapasSeptiembre2025Model.Store.MateriaGetAll">
             <ResultMapping>
               <ComplexTypeMapping TypeName="JGuevaraProgramacionNCapasSeptiembre2025Model.MateriaGetAll_Result">

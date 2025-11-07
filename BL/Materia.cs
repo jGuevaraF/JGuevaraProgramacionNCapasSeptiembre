@@ -314,7 +314,7 @@ namespace BL
             {
                 using (DL_EF.JGuevaraProgramacionNCapasSeptiembre2025Entities context = new DL_EF.JGuevaraProgramacionNCapasSeptiembre2025Entities())
                 {
-                    var registros = context.MateriaGetAll(materiaBusqueda.Nombre).ToList();
+                    var registros = context.MateriaGetAll(materiaBusqueda.Nombre, materiaBusqueda.Carrera.IdCarrera).ToList();
 
                     if (registros.Count > 0)
                     {

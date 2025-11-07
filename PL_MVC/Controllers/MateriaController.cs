@@ -19,16 +19,31 @@ namespace PL_MVC.Controllers
         {
             ML.Materia materia = new ML.Materia();
             materia.Nombre = "";
+            materia.Carrera = new ML.Carrera();
 
             var registros = BL.Materia.GetAll(materia);
 
             if (registros.Correct)
             {
                 materia.Materias = registros.Objects;
+
+                ML.Result resultCarreras = BL.Carrera.GetAll();
+
+                if (resultCarreras.Correct)
+                {
+                    materia.Carrera.Carreras = resultCarreras.Objects;
+                }
+                else
+                {
+                    ViewBag.Error = resultCarreras.ErrorMessage;
+                    materia.Carrera.Carreras = new List<object> { };
+                }
+
                 return View(materia);
             }
             else
             {
+                ViewBag.Error = registros.ErrorMessage;
                 materia.Materias = new List<object>(); //***********
                 return View(materia);
 
@@ -38,7 +53,45 @@ namespace PL_MVC.Controllers
         [HttpPost]
         public ActionResult GetAll(ML.Materia materia)
         {
-            return View();
+
+            materia.Nombre = materia.Nombre == null ? "" : materia.Nombre;
+            
+            ML.Result result = BL.Materia.GetAll(materia);
+
+            if (result.Correct)
+            {
+                materia.Materias = result.Objects;
+
+                ML.Result resultCarreras = BL.Carrera.GetAll();
+
+                if (resultCarreras.Correct)
+                {
+                    materia.Carrera.Carreras = resultCarreras.Objects;
+                }
+                else
+                {
+                    ViewBag.Error = resultCarreras.ErrorMessage;
+                    materia.Carrera.Carreras = new List<object> { };
+                }
+            }
+            else
+            {
+                materia.Materias = new List<object>();
+                ViewBag.Error = "No se encontraron registros";
+                ML.Result resultCarreras = BL.Carrera.GetAll();
+
+                if (resultCarreras.Correct)
+                {
+                    materia.Carrera.Carreras = resultCarreras.Objects;
+                }
+                else
+                {
+                    ViewBag.Error = resultCarreras.ErrorMessage;
+                    materia.Carrera.Carreras = new List<object> { };
+                }
+            }
+
+            return View(materia);
         }
 
         [HttpGet] //=> mostrar la vista

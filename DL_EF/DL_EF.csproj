@@ -56,6 +56,9 @@
     <Compile Include="Carrera.cs">
       <DependentUpon>JGuevaraProgramacionNCapasSeptiembre.tt</DependentUpon>
     </Compile>
+    <Compile Include="CarreraGetAll_Result.cs">
+      <DependentUpon>JGuevaraProgramacionNCapasSeptiembre.tt</DependentUpon>
+    </Compile>
     <Compile Include="Class1.cs" />
     <Compile Include="JGuevaraProgramacionNCapasSeptiembre.Context.cs">
       <AutoGen>True</AutoGen>
