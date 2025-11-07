@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="JGuevaraProgramacionNCapasSeptiembre2025Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Carrera">
+          <Key>
+            <PropertyRef Name="IdCarrera" />
+          </Key>
+          <Property Name="IdCarrera" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'JGuevaraProgramacionNCapasSeptiembre2025.dbo.Materia' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Materia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="20" />
+          <Property Name="Creditos" Type="tinyint" />
+          <Property Name="Promedio" Type="decimal" Precision="4" Scale="0" />
+          <Property Name="Dinero" Type="money" />
+          <Property Name="Fecha" Type="date" />
+          <Property Name="FechaYHora" Type="datetime" />
+          <Property Name="IdCarrera" Type="int" />
+          <Property Name="Estatus" Type="bit" />
+        </EntityType>
+        <Association Name="FK__Materia__IdCarre__267ABA7A">
+          <End Role="Carrera" Type="Self.Carrera" Multiplicity="0..1" />
+          <End Role="Materia" Type="Self.Materia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carrera">
+              <PropertyRef Name="IdCarrera" />
+            </Principal>
+            <Dependent Role="Materia">
+              <PropertyRef Name="IdCarrera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="MateriaAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Creditos" Type="tinyint" Mode="In" />
+          <Parameter Name="Promedio" Type="decimal" Mode="In" />
+          <Parameter Name="Dinero" Type="money" Mode="In" />
+        </Function>
+        <Function Name="MateriaChangeStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="Status" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="MateriaGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="MateriaGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdMateria" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="JGuevaraProgramacionNCapasSeptiembre2025ModelStoreContainer">
+          <EntitySet Name="Carrera" EntityType="Self.Carrera" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Materia" EntityType="Self.Materia" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Materia].[Id] AS [Id], 
+    [Materia].[Nombre] AS [Nombre], 
+    [Materia].[Creditos] AS [Creditos], 
+    [Materia].[Promedio] AS [Promedio], 
+    [Materia].[Dinero] AS [Dinero], 
+    [Materia].[Fecha] AS [Fecha], 
+    [Materia].[FechaYHora] AS [FechaYHora], 
+    [Materia].[IdCarrera] AS [IdCarrera], 
+    [Materia].[Estatus] AS [Estatus]
+    FROM [dbo].[Materia] AS [Materia]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Materia__IdCarre__267ABA7A" Association="Self.FK__Materia__IdCarre__267ABA7A">
+            <End Role="Carrera" EntitySet="Carrera" />
+            <End Role="Materia" EntitySet="Materia" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="JGuevaraProgramacionNCapasSeptiembre2025Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Carrera">
+          <Key>
+            <PropertyRef Name="IdCarrera" />
+          </Key>
+          <Property Name="IdCarrera" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Materias" Relationship="Self.FK__Materia__IdCarre__267ABA7A" FromRole="Carrera" ToRole="Materia" />
+        </EntityType>
+        <EntityType Name="Materia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Creditos" Type="Byte" />
+          <Property Name="Promedio" Type="Decimal" Precision="4" Scale="0" />
+          <Property Name="Dinero" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Fecha" Type="DateTime" Precision="0" />
+          <Property Name="FechaYHora" Type="DateTime" Precision="3" />
+          <Property Name="IdCarrera" Type="Int32" />
+          <NavigationProperty Name="Carrera" Relationship="Self.FK__Materia__IdCarre__267ABA7A" FromRole="Materia" ToRole="Carrera" />
+          <Property Name="Estatus" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK__Materia__IdCarre__267ABA7A">
+          <End Role="Carrera" Type="Self.Carrera" Multiplicity="0..1" />
+          <End Role="Materia" Type="Self.Materia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carrera">
+              <PropertyRef Name="IdCarrera" />
+            </Principal>
+            <Dependent Role="Materia">
+              <PropertyRef Name="IdCarrera" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="JGuevaraProgramacionNCapasSeptiembre2025Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Carreras" EntityType="Self.Carrera" />
+          <EntitySet Name="Materias" EntityType="Self.Materia" />
+          <AssociationSet Name="FK__Materia__IdCarre__267ABA7A" Association="Self.FK__Materia__IdCarre__267ABA7A">
+            <End Role="Carrera" EntitySet="Carreras" />
+            <End Role="Materia" EntitySet="Materias" />
+          </AssociationSet>
+          <FunctionImport Name="MateriaAdd">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Creditos" Mode="In" Type="Byte" />
+            <Parameter Name="Promedio" Mode="In" Type="Decimal" />
+            <Parameter Name="Dinero" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="MateriaGetById" ReturnType="Collection(JGuevaraProgramacionNCapasSeptiembre2025Model.MateriaGetById_Result)">
+          <Parameter Name="IdMateria" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="MateriaChangeStatus">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="Status" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="MateriaGetAll" ReturnType="Collection(JGuevaraProgramacionNCapasSeptiembre2025Model.MateriaGetAll_Result)">
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="MateriaGetById_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="20" />
+          <Property Type="Byte" Name="Creditos" Nullable="true" />
+          <Property Type="Decimal" Name="Promedio" Nullable="true" Precision="4" Scale="0" />
+          <Property Type="Decimal" Name="Dinero" Nullable="true" Precision="19" />
+        </ComplexType>
+        <ComplexType Name="MateriaGetAll_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="MateriaNombre" Nullable="true" MaxLength="20" />
+          <Property Type="Byte" Name="Creditos" Nullable="true" />
+          <Property Type="Decimal" Name="Promedio" Nullable="true" Precision="4" Scale="0" />
+          <Property Type="Decimal" Name="Dinero" Nullable="true" Precision="19" />
+          <Property Type="DateTime" Name="Fecha" Nullable="true" />
+          <Property Type="DateTime" Name="FechaYHora" Nullable="true" Precision="23" />
+          <Property Type="String" Name="CarreraNombre" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="Estatus" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="JGuevaraProgramacionNCapasSeptiembre2025ModelStoreContainer" CdmEntityContainer="JGuevaraProgramacionNCapasSeptiembre2025Entities">
+          <EntitySetMapping Name="Carreras">
+            <EntityTypeMapping TypeName="JGuevaraProgramacionNCapasSeptiembre2025Model.Carrera">
+              <MappingFragment StoreEntitySet="Carrera">
+                <ScalarProperty Name="IdCarrera" ColumnName="IdCarrera" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materias">
+            <EntityTypeMapping TypeName="JGuevaraProgramacionNCapasSeptiembre2025Model.Materia">
+              <MappingFragment StoreEntitySet="Materia">
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Creditos" ColumnName="Creditos" />
+                <ScalarProperty Name="Promedio" ColumnName="Promedio" />
+                <ScalarProperty Name="Dinero" ColumnName="Dinero" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="FechaYHora" ColumnName="FechaYHora" />
+                <ScalarProperty Name="IdCarrera" ColumnName="IdCarrera" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="MateriaAdd" FunctionName="JGuevaraProgramacionNCapasSeptiembre2025Model.Store.MateriaAdd" />
+          <FunctionImportMapping FunctionImportName="MateriaGetById" FunctionName="JGuevaraProgramacionNCapasSeptiembre2025Model.Store.MateriaGetById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JGuevaraProgramacionNCapasSeptiembre2025Model.MateriaGetById_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Creditos" ColumnName="Creditos" />
+                <ScalarProperty Name="Promedio" ColumnName="Promedio" />
+                <ScalarProperty Name="Dinero" ColumnName="Dinero" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="MateriaChangeStatus" FunctionName="JGuevaraProgramacionNCapasSeptiembre2025Model.Store.MateriaChangeStatus" />
+          <FunctionImportMapping FunctionImportName="MateriaGetAll" FunctionName="JGuevaraProgramacionNCapasSeptiembre2025Model.Store.MateriaGetAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JGuevaraProgramacionNCapasSeptiembre2025Model.MateriaGetAll_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MateriaNombre" ColumnName="MateriaNombre" />
+                <ScalarProperty Name="Creditos" ColumnName="Creditos" />
+                <ScalarProperty Name="Promedio" ColumnName="Promedio" />
+                <ScalarProperty Name="Dinero" ColumnName="Dinero" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="FechaYHora" ColumnName="FechaYHora" />
+                <ScalarProperty Name="CarreraNombre" ColumnName="CarreraNombre" />
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

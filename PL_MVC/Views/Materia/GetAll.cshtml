@@ -1,0 +1,120 @@
+﻿@model ML.Materia
+
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<h1>Materias</h1> <i class="bi bi-wifi-off"></i>
+<hr />
+
+<div class="container">
+    <div class="row">
+        <a href="@Url.Action("Form","Materia")" class="col-3 btn btn-success">Agregar Materia</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="table-responsive col-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        @*fila*@
+                        <th>Estatus</th>
+                        <th>Nombre</th>
+                        <th>Creditos</th>
+                        <th>Carrera</th>
+                        <th>Carrera</th>
+                        <th>Carrera</th>
+                        <th>Carrera</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model.Materias.Count > 0)
+                    {
+                        foreach (ML.Materia materia in Model.Materias)
+                        {
+
+
+                            <tr>
+                                @if (materia.Estatus)
+                                {
+                                    <td>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" checked onchange="CambiarEstatus(@materia.Id, this)">
+
+                                        </div>
+                                    </td>
+
+                                }
+                                else
+                                {
+                                    <td>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckChecked" onchange="CambiarEstatus(@materia.Id, this)">
+                                        </div>
+                                    </td>
+                                }
+                                @*<td>@materia.Estatus</td>*@
+
+
+                                <td>@materia.Nombre</td>
+                                <td>@materia.Creditos</td>
+                                <td>@materia.Carrera.Nombre</td>
+                                <td>@materia.Carrera.Nombre</td>
+                                <td>@materia.Carrera.Nombre</td>
+                                <td>@materia.Carrera.Nombre</td>
+                                <td>
+                                    <a href="@Url.Action("Form", "Materia", new {idMateria = materia.Id})">
+                                        <i class="bi bi-pencil-fill btn btn-warning"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="@Url.Action("Delete", "Materia", new { idMateria = materia.Id })" onclick="return confirm('Estas seguro que quieres eliminarlo?')">
+                                        <i class="bi bi-trash-fill btn btn-danger"></i>
+
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <p>No hay registros</p>
+                    }
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/jquery-3.7.0.js"></script>
+
+<script>
+    function CambiarEstatus(idMateriaCambiar, inptEstatus) {
+
+        let valorEstatus = inptEstatus.checked;
+
+        $.ajax({
+            url: '@Url.Action("ChangeStatus","Materia")',
+            type: 'POST',
+            dataType: 'JSON',
+            data: { idMateria: idMateriaCambiar, estatus: valorEstatus },
+            success: function (result) {
+
+            },
+            error: function () {
+
+            }
+        })
+    }
+</script>
