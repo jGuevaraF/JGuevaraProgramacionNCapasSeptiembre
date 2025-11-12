@@ -17,7 +17,10 @@ namespace ML
         //FK
 
         public List<object> Materias { get; set; }
+
+        public Direccion Direccion { get; set; }
     }
+
 
     //cuando manden mas de 2 campos, mejor manden un modelo
 }

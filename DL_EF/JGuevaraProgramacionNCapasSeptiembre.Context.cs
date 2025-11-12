@@ -29,6 +29,7 @@ namespace DL_EF
     
         public virtual DbSet<Carrera> Carreras { get; set; }
         public virtual DbSet<Materia> Materias { get; set; }
+        public virtual DbSet<MateriaGetAllView> MateriaGetAllViews { get; set; }
     
         public virtual int MateriaAdd(string nombre, Nullable<byte> creditos, Nullable<decimal> promedio, Nullable<decimal> dinero)
         {

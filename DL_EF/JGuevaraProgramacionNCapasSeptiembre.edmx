@@ -28,6 +28,22 @@ warning 6002: The table/view 'JGuevaraProgramacionNCapasSeptiembre2025.dbo.Mater
           <Property Name="IdCarrera" Type="int" />
           <Property Name="Estatus" Type="bit" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'JGuevaraProgramacionNCapasSeptiembre2025.dbo.MateriaGetAllView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="MateriaGetAllView">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="MateriaNombre" Type="varchar" MaxLength="20" />
+          <Property Name="Creditos" Type="tinyint" />
+          <Property Name="Promedio" Type="decimal" Precision="4" Scale="0" />
+          <Property Name="Dinero" Type="money" />
+          <Property Name="Fecha" Type="date" />
+          <Property Name="FechaYHora" Type="datetime" />
+          <Property Name="CarreraNombre" Type="varchar" MaxLength="50" />
+          <Property Name="Estatus" Type="bit" />
+        </EntityType>
         <Association Name="FK__Materia__IdCarre__2B3F6F97">
           <End Role="Carrera" Type="Self.Carrera" Multiplicity="0..1" />
           <End Role="Materia" Type="Self.Materia" Multiplicity="*" />
@@ -72,6 +88,19 @@ warning 6002: The table/view 'JGuevaraProgramacionNCapasSeptiembre2025.dbo.Mater
     [Materia].[IdCarrera] AS [IdCarrera], 
     [Materia].[Estatus] AS [Estatus]
     FROM [dbo].[Materia] AS [Materia]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="MateriaGetAllView" EntityType="Self.MateriaGetAllView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [MateriaGetAllView].[Id] AS [Id], 
+    [MateriaGetAllView].[MateriaNombre] AS [MateriaNombre], 
+    [MateriaGetAllView].[Creditos] AS [Creditos], 
+    [MateriaGetAllView].[Promedio] AS [Promedio], 
+    [MateriaGetAllView].[Dinero] AS [Dinero], 
+    [MateriaGetAllView].[Fecha] AS [Fecha], 
+    [MateriaGetAllView].[FechaYHora] AS [FechaYHora], 
+    [MateriaGetAllView].[CarreraNombre] AS [CarreraNombre], 
+    [MateriaGetAllView].[Estatus] AS [Estatus]
+    FROM [dbo].[MateriaGetAllView] AS [MateriaGetAllView]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK__Materia__IdCarre__2B3F6F97" Association="Self.FK__Materia__IdCarre__2B3F6F97">
             <End Role="Carrera" EntitySet="Carrera" />
@@ -142,6 +171,7 @@ warning 6002: The table/view 'JGuevaraProgramacionNCapasSeptiembre2025.dbo.Mater
             <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="IdCarrera" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="MateriaGetAllViews" EntityType="JGuevaraProgramacionNCapasSeptiembre2025Model.MateriaGetAllView" />
         </EntityContainer>
         <ComplexType Name="MateriaGetById_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -165,6 +195,20 @@ warning 6002: The table/view 'JGuevaraProgramacionNCapasSeptiembre2025.dbo.Mater
           <Property Type="String" Name="CarreraNombre" Nullable="true" MaxLength="50" />
           <Property Type="Boolean" Name="Estatus" Nullable="true" />
         </ComplexType>
+        <EntityType Name="MateriaGetAllView">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="MateriaNombre" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Creditos" Type="Byte" />
+          <Property Name="Promedio" Type="Decimal" Precision="4" Scale="0" />
+          <Property Name="Dinero" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Fecha" Type="DateTime" Precision="0" />
+          <Property Name="FechaYHora" Type="DateTime" Precision="3" />
+          <Property Name="CarreraNombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Estatus" Type="Boolean" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -230,6 +274,21 @@ warning 6002: The table/view 'JGuevaraProgramacionNCapasSeptiembre2025.dbo.Mater
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="MateriaGetAllViews">
+            <EntityTypeMapping TypeName="JGuevaraProgramacionNCapasSeptiembre2025Model.MateriaGetAllView">
+              <MappingFragment StoreEntitySet="MateriaGetAllView">
+                <ScalarProperty Name="Estatus" ColumnName="Estatus" />
+                <ScalarProperty Name="CarreraNombre" ColumnName="CarreraNombre" />
+                <ScalarProperty Name="FechaYHora" ColumnName="FechaYHora" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Dinero" ColumnName="Dinero" />
+                <ScalarProperty Name="Promedio" ColumnName="Promedio" />
+                <ScalarProperty Name="Creditos" ColumnName="Creditos" />
+                <ScalarProperty Name="MateriaNombre" ColumnName="MateriaNombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

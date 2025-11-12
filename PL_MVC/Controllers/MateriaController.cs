@@ -173,5 +173,22 @@ namespace PL_MVC.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult GetAllView()
+        {
+            ML.Result result = BL.Materia.GetAllView();
+            ML.Materia materia = new ML.Materia();
+
+            if (result.Correct)
+            {
+                materia.Materias = result.Objects;
+            }
+            else
+            {
+
+            }
+
+            return View(materia);
+        }
     }
 }

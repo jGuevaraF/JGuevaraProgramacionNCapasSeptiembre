@@ -361,6 +361,60 @@ namespace BL
             return result;
         }
 
+        public static ML.Result GetAllView()
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using (DL_EF.JGuevaraProgramacionNCapasSeptiembre2025Entities context = new DL_EF.JGuevaraProgramacionNCapasSeptiembre2025Entities())
+                {
+                    var registros = context.MateriaGetAllViews.ToList();
+
+                    if (registros.Count > 0)
+                    {
+                        result.Objects = new List<object>();
+
+                        foreach (var registro in registros)
+                        {
+                            ML.Materia materia = new ML.Materia();
+                            materia.Id = registro.Id;
+                            if (registro.Promedio != null)
+                            {
+                                materia.Promedio = registro.Promedio.Value;
+
+                            }
+
+                            materia.Nombre = registro.MateriaNombre;
+                            materia.Carrera = new ML.Carrera();
+                            materia.Carrera.Nombre = registro.CarreraNombre;
+
+                            materia.Estatus = registro.Estatus ?? false;
+
+                            result.Objects.Add(materia);
+                        }
+
+                        result.Correct = true;
+
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "No hay registros";
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
+            }
+
+            return result;
+        }
+
         public static ML.Result GetById(int idMateria)
         {
             ML.Result result = new ML.Result();
